@@ -12,14 +12,25 @@ import { GameState } from "@shared/mineGame";
 
 const MineGame = () => {
   const [gameState, setGameState] = useState<GameState | null>(null);
-  const { isMuted, toggleMute } = useAudio();
   const { balance, updateBalance, addGameToHistory } = usePlayerStore();
   
-  // Initialize player with starting balance if not already done
+  // Initialize player with starting balance and load sounds
   useEffect(() => {
     if (balance === 0) {
       updateBalance(1000); // Start with $1000 fake money
     }
+    
+    // Load sounds
+    const hitSound = new Audio("/sounds/explosion.mp3");
+    const successSound = new Audio("/sounds/success.mp3");
+    const gemSound = new Audio("/sounds/gem.mp3");
+    const cashoutSound = new Audio("/sounds/cashout.mp3");
+    
+    // Set the sounds in the audio store
+    useAudio.getState().setHitSound(hitSound);
+    useAudio.getState().setSuccessSound(successSound);
+    useAudio.getState().setGemSound(gemSound);
+    useAudio.getState().setCashoutSound(cashoutSound);
     
     // Check for ongoing game on mount
     const fetchCurrentGame = async () => {
@@ -54,11 +65,27 @@ const MineGame = () => {
     try {
       const response = await apiRequest("POST", "/api/game/reveal", { row, col });
       const data = await response.json();
+      
+      // Check if the cell had a mine
+      const previousBoard = gameState.board;
+      const currentBoard = data.game.board;
+      const cellRevealed = 
+        previousBoard[row][col].revealed !== currentBoard[row][col].revealed;
+      const isMine = currentBoard[row][col].hasMine;
+      
       setGameState(data.game);
+      
+      // Play appropriate sound based on what was revealed
+      if (cellRevealed) {
+        if (isMine) {
+          useAudio.getState().playHit();
+        } else {
+          useAudio.getState().playGem();
+        }
+      }
       
       // Handle game outcomes
       if (data.game.status === "lost") {
-        useAudio.getState().playHit();
         // Game already over, balance already updated on server
       } else if (data.game.status === "won") {
         useAudio.getState().playSuccess();
@@ -86,7 +113,9 @@ const MineGame = () => {
       const data = await response.json();
       setGameState(data.game);
       updateBalance(data.payout);
-      useAudio.getState().playSuccess();
+      
+      // Play cashout sound instead of success sound for cash out
+      useAudio.getState().playCashout();
       
       addGameToHistory({ 
         id: data.game.id,
@@ -106,21 +135,8 @@ const MineGame = () => {
     <div className="container mx-auto py-3 sm:py-4 px-2 sm:px-4 pb-16 sm:pb-24 overflow-y-auto">
       <div className="flex flex-col sm:flex-row justify-between items-center mb-4 sm:mb-6 gap-2 sm:gap-3">
         <h1 className="text-2xl sm:text-3xl font-bold">Mine Game</h1>
-        <div className="flex items-center gap-3 sm:gap-4">
-          <button
-            onClick={toggleMute}
-            className="p-1.5 sm:p-2 rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/80"
-            aria-label={isMuted ? "Unmute sound" : "Mute sound"}
-          >
-            {isMuted ? (
-              <i className="fas fa-volume-mute text-lg sm:text-xl"></i>
-            ) : (
-              <i className="fas fa-volume-up text-lg sm:text-xl"></i>
-            )}
-          </button>
-          <div className="text-lg sm:text-2xl font-bold">
-            Balance: ${balance.toFixed(2)}
-          </div>
+        <div className="text-lg sm:text-2xl font-bold">
+          Balance: ${balance.toFixed(2)}
         </div>
       </div>
 
