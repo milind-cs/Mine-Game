@@ -45,11 +45,12 @@ const GameHistory = () => {
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between pb-2">
-        <CardTitle>Game History</CardTitle>
+      <CardHeader className="flex flex-row items-center justify-between pb-2 px-3 sm:px-6 py-3 sm:py-4">
+        <CardTitle className="text-base sm:text-lg">Game History</CardTitle>
         <button
           onClick={() => setIsVisible(!isVisible)}
           className="text-muted-foreground hover:text-foreground"
+          aria-label={isVisible ? "Hide history" : "Show history"}
         >
           {isVisible ? (
             <i className="fas fa-chevron-up"></i>
@@ -58,39 +59,39 @@ const GameHistory = () => {
           )}
         </button>
       </CardHeader>
-      <CardContent className={cn(!isVisible && "hidden")}>
+      <CardContent className={cn(!isVisible && "hidden", "px-3 sm:px-6 py-2 sm:py-4")}>
         {gameHistory.length === 0 ? (
-          <p className="text-center text-muted-foreground py-4">
+          <p className="text-center text-muted-foreground py-4 text-sm">
             No games played yet
           </p>
         ) : (
           <div className="max-h-[300px] overflow-y-auto">
             <table className="w-full">
               <thead>
-                <tr className="text-xs text-muted-foreground">
+                <tr className="text-[10px] sm:text-xs text-muted-foreground">
                   <th className="text-left pb-2">Time</th>
                   <th className="text-right pb-2">Bet</th>
                   <th className="text-right pb-2">Mines</th>
-                  <th className="text-right pb-2">Payout</th>
+                  <th className="text-right pb-2 hidden sm:table-cell">Payout</th>
                   <th className="text-right pb-2">Result</th>
                 </tr>
               </thead>
               <tbody>
                 {gameHistory.map((game) => (
                   <tr key={game.id} className="border-t border-border">
-                    <td className="py-2 text-xs">{formatDate(game.date)}</td>
-                    <td className="py-2 text-xs text-right">${game.bet.toFixed(2)}</td>
-                    <td className="py-2 text-xs text-right">{game.mineCount}</td>
-                    <td className="py-2 text-xs text-right">
+                    <td className="py-2 text-[10px] sm:text-xs">{formatDate(game.date)}</td>
+                    <td className="py-2 text-[10px] sm:text-xs text-right">${game.bet.toFixed(2)}</td>
+                    <td className="py-2 text-[10px] sm:text-xs text-right">{game.mineCount}</td>
+                    <td className="py-2 text-[10px] sm:text-xs text-right hidden sm:table-cell">
                       ${game.payout.toFixed(2)}
-                      <span className="text-xs opacity-60 ml-1">
+                      <span className="text-[10px] sm:text-xs opacity-60 ml-1">
                         ({game.multiplier.toFixed(2)}x)
                       </span>
                     </td>
                     <td className="py-2 text-right">
                       <span className={cn("flex items-center justify-end gap-1", getStatusColor(game.status))}>
                         {getStatusIcon(game.status)}
-                        <span className="text-xs capitalize">
+                        <span className="text-[10px] sm:text-xs capitalize hidden sm:inline">
                           {game.status === "cashed_out" ? "Cashed Out" : game.status}
                         </span>
                       </span>

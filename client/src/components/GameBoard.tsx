@@ -55,19 +55,24 @@ const GameBoard = ({ gameState, onCellClick }: GameBoardProps) => {
       
       {/* Overlay for game end state */}
       {(gameState.status === "won" || gameState.status === "lost") && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black/70 rounded-lg z-10">
+        <div className="absolute inset-0 flex items-center justify-center bg-black/70 rounded-lg z-10 p-4">
           <div className="text-center">
             <h2 className={cn(
-              "text-4xl font-bold mb-4",
+              "text-2xl sm:text-4xl font-bold mb-2 sm:mb-4",
               gameState.status === "won" ? "text-green-500" : "text-red-500"
             )}>
               {gameState.status === "won" ? "YOU WON!" : "GAME OVER!"}
             </h2>
-            <p className="text-2xl">
+            <p className="text-base sm:text-2xl">
               {gameState.status === "won" 
-                ? `You revealed all gems! Payout: $${(gameState.bet * gameState.currentMultiplier).toFixed(2)}`
+                ? `You revealed all gems!`
                 : "You hit a mine!"}
             </p>
+            {gameState.status === "won" && (
+              <p className="text-xl sm:text-2xl mt-2 font-bold text-green-500">
+                Payout: ${(gameState.bet * gameState.currentMultiplier).toFixed(2)}
+              </p>
+            )}
           </div>
         </div>
       )}

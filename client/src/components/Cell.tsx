@@ -29,13 +29,13 @@ const Cell = ({ cell, onClick, gameState }: CellProps) => {
   const getCellContent = () => {
     if (cell.revealed) {
       if (cell.hasMine) {
-        return <i className="fas fa-bomb text-xl"></i>;
+        return <i className="fas fa-bomb text-lg sm:text-xl"></i>;
       } else {
-        return <i className="fas fa-gem text-xl text-blue-400"></i>;
+        return <i className="fas fa-gem text-lg sm:text-xl text-blue-400"></i>;
       }
     } else if ((gameState.status === "lost" || gameState.status === "cashed_out") && cell.hasMine) {
       // Show mines when game is over
-      return <i className="fas fa-bomb text-xl text-red-500 opacity-70"></i>;
+      return <i className="fas fa-bomb text-lg sm:text-xl text-red-500 opacity-70"></i>;
     } else {
       return null;
     }

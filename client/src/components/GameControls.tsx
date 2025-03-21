@@ -30,14 +30,14 @@ const GameControls = ({ gameState, onCashOut, onNewGame }: GameControlsProps) =>
       case "active":
         return (
           <div className="text-primary">
-            <p className="text-lg">Continue revealing gems or cash out now!</p>
+            <p className="text-sm sm:text-lg">Continue revealing gems or cash out now!</p>
           </div>
         );
       case "won":
         return (
           <div className="text-green-500">
-            <p className="text-lg">You revealed all gems!</p>
-            <p className="text-xl font-bold">
+            <p className="text-sm sm:text-lg">You revealed all gems!</p>
+            <p className="text-base sm:text-xl font-bold">
               Payout: ${(gameState.bet * gameState.currentMultiplier).toFixed(2)}
             </p>
           </div>
@@ -45,14 +45,14 @@ const GameControls = ({ gameState, onCashOut, onNewGame }: GameControlsProps) =>
       case "lost":
         return (
           <div className="text-red-500">
-            <p className="text-lg">You hit a mine! Better luck next time.</p>
+            <p className="text-sm sm:text-lg">You hit a mine! Better luck next time.</p>
           </div>
         );
       case "cashed_out":
         return (
           <div className="text-green-500">
-            <p className="text-lg">You cashed out successfully!</p>
-            <p className="text-xl font-bold">
+            <p className="text-sm sm:text-lg">You cashed out successfully!</p>
+            <p className="text-base sm:text-xl font-bold">
               Payout: ${currentPayout.toFixed(2)}
             </p>
           </div>
@@ -63,17 +63,17 @@ const GameControls = ({ gameState, onCashOut, onNewGame }: GameControlsProps) =>
   };
 
   return (
-    <div className="mt-6">
-      <div className="flex justify-between items-center mb-4">
+    <div className="mt-4 sm:mt-6">
+      <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-3 sm:mb-4 text-center sm:text-left">
         <div>
-          <div className="text-sm opacity-70">Current Bet</div>
-          <div className="text-lg font-bold">${gameState.bet.toFixed(2)}</div>
+          <div className="text-xs sm:text-sm opacity-70">Current Bet</div>
+          <div className="text-sm sm:text-lg font-bold">${gameState.bet.toFixed(2)}</div>
         </div>
         
         <div>
-          <div className="text-sm opacity-70">Current Payout</div>
+          <div className="text-xs sm:text-sm opacity-70">Current Payout</div>
           <div className={cn(
-            "text-lg font-bold",
+            "text-sm sm:text-lg font-bold",
             isActive ? "text-green-500" : (isGameOver && gameState.status !== "lost") ? "text-green-500" : ""
           )}>
             ${currentPayout.toFixed(2)}
@@ -81,9 +81,9 @@ const GameControls = ({ gameState, onCashOut, onNewGame }: GameControlsProps) =>
         </div>
         
         <div>
-          <div className="text-sm opacity-70">Multiplier</div>
+          <div className="text-xs sm:text-sm opacity-70">Multiplier</div>
           <div className={cn(
-            "text-lg font-bold",
+            "text-sm sm:text-lg font-bold",
             isActive ? "text-yellow-500" : ""
           )}>
             {gameState.currentMultiplier.toFixed(2)}x
@@ -91,15 +91,15 @@ const GameControls = ({ gameState, onCashOut, onNewGame }: GameControlsProps) =>
         </div>
       </div>
       
-      <div className="text-center mb-4">
+      <div className="text-center mb-3 sm:mb-4 min-h-[60px] flex items-center justify-center">
         {renderGameStatus()}
       </div>
       
-      <div className="flex gap-4">
+      <div className="flex gap-2 sm:gap-4">
         {isActive && (
           <Button 
             onClick={handleCashOut}
-            className="w-full bg-green-600 hover:bg-green-700"
+            className="w-full bg-green-600 hover:bg-green-700 py-2 text-sm sm:text-base"
           >
             Cash Out ${currentPayout.toFixed(2)}
           </Button>
@@ -108,7 +108,7 @@ const GameControls = ({ gameState, onCashOut, onNewGame }: GameControlsProps) =>
         {isGameOver && (
           <Button 
             onClick={onNewGame}
-            className="w-full"
+            className="w-full py-2 text-sm sm:text-base"
           >
             New Game
           </Button>
