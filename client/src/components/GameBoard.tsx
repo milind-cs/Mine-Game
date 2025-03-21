@@ -36,7 +36,7 @@ const GameBoard = ({ gameState, onCellClick }: GameBoardProps) => {
       {/* Game board */}
       <div 
         className={cn(
-          "grid grid-cols-5 gap-2 max-w-md mx-auto transition-all duration-300",
+          "grid grid-cols-5 gap-1 sm:gap-2 w-full max-w-xs sm:max-w-md mx-auto transition-all duration-300",
           mineRevealAnimation && "shake",
           winAnimation && "winner"
         )}

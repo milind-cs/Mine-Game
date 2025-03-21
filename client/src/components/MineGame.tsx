@@ -103,8 +103,8 @@ const MineGame = () => {
   };
 
   return (
-    <div className="container mx-auto py-8 px-4">
-      <div className="flex justify-between items-center mb-8">
+    <div className="container mx-auto py-4 px-4 pb-24 overflow-y-auto">
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-3">
         <h1 className="text-3xl font-bold">Mine Game</h1>
         <div className="flex items-center gap-4">
           <button
@@ -117,7 +117,7 @@ const MineGame = () => {
               <i className="fas fa-volume-up text-xl"></i>
             )}
           </button>
-          <div className="text-2xl font-bold">
+          <div className="text-xl sm:text-2xl font-bold">
             Balance: ${balance.toFixed(2)}
           </div>
         </div>
@@ -126,8 +126,8 @@ const MineGame = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <Card>
-            <CardHeader>
-              <CardTitle className="flex justify-between">
+            <CardHeader className="py-3">
+              <CardTitle className="flex justify-between items-center flex-wrap gap-2">
                 <span>Game Board</span>
                 {gameState && gameState.status === "active" && (
                   <span className="text-primary text-xl">
@@ -157,7 +157,7 @@ const MineGame = () => {
         </div>
 
         <div>
-          <div className="grid grid-cols-1 gap-6">
+          <div className="grid grid-cols-1 gap-4">
             <GameStats gameState={gameState} />
             <GameHistory />
           </div>
