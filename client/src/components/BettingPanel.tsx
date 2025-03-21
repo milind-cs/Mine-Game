@@ -116,28 +116,28 @@ const BettingPanel = ({ onStartGame, maxBet }: BettingPanelProps) => {
             </div>
           </div>
           
-          <div className="grid grid-cols-5 gap-2 mb-6">
+          <div className="grid grid-cols-5 gap-1 sm:gap-2 mb-6">
             {[1, 3, 5, 10, 15].map((num) => (
               <Button
                 key={num}
                 variant={mineCount === num ? "default" : "outline"}
                 onClick={() => setMineCount(num)}
-                className="p-1 h-auto"
+                className="p-1 h-auto text-xs sm:text-sm"
               >
                 {num}
               </Button>
             ))}
           </div>
           
-          <div className="p-4 rounded-md bg-background/50 mb-6">
-            <div className="flex justify-between mb-2">
-              <span>Potential Max Win:</span>
+          <div className="p-3 sm:p-4 rounded-md bg-background/50 mb-4 sm:mb-6 text-sm sm:text-base">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-xs sm:text-sm">Potential Max Win:</span>
               <span className="font-bold text-green-500">
                 ${(bet * parseFloat(getMaxMultiplier())).toFixed(2)}
               </span>
             </div>
-            <div className="flex justify-between">
-              <span>Max Multiplier:</span>
+            <div className="flex justify-between items-center">
+              <span className="text-xs sm:text-sm">Max Multiplier:</span>
               <span className="font-bold text-yellow-500">{getMaxMultiplier()}x</span>
             </div>
           </div>

@@ -103,40 +103,41 @@ const MineGame = () => {
   };
 
   return (
-    <div className="container mx-auto py-4 px-4 pb-24 overflow-y-auto">
-      <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-3">
-        <h1 className="text-3xl font-bold">Mine Game</h1>
-        <div className="flex items-center gap-4">
+    <div className="container mx-auto py-3 sm:py-4 px-2 sm:px-4 pb-16 sm:pb-24 overflow-y-auto">
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-4 sm:mb-6 gap-2 sm:gap-3">
+        <h1 className="text-2xl sm:text-3xl font-bold">Mine Game</h1>
+        <div className="flex items-center gap-3 sm:gap-4">
           <button
             onClick={toggleMute}
-            className="p-2 rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/80"
+            className="p-1.5 sm:p-2 rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/80"
+            aria-label={isMuted ? "Unmute sound" : "Mute sound"}
           >
             {isMuted ? (
-              <i className="fas fa-volume-mute text-xl"></i>
+              <i className="fas fa-volume-mute text-lg sm:text-xl"></i>
             ) : (
-              <i className="fas fa-volume-up text-xl"></i>
+              <i className="fas fa-volume-up text-lg sm:text-xl"></i>
             )}
           </button>
-          <div className="text-xl sm:text-2xl font-bold">
+          <div className="text-lg sm:text-2xl font-bold">
             Balance: ${balance.toFixed(2)}
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         <div className="lg:col-span-2">
           <Card>
-            <CardHeader className="py-3">
-              <CardTitle className="flex justify-between items-center flex-wrap gap-2">
+            <CardHeader className="py-2 sm:py-3 px-3 sm:px-6">
+              <CardTitle className="flex justify-between items-center flex-wrap gap-2 text-base sm:text-lg">
                 <span>Game Board</span>
                 {gameState && gameState.status === "active" && (
-                  <span className="text-primary text-xl">
+                  <span className="text-primary text-lg sm:text-xl">
                     Multiplier: {gameState.currentMultiplier.toFixed(2)}x
                   </span>
                 )}
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-3 sm:p-6">
               {!gameState || gameState.status === "finished" ? (
                 <BettingPanel onStartGame={startGame} maxBet={balance} />
               ) : (
