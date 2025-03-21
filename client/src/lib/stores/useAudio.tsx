@@ -37,10 +37,9 @@ export const useAudio = create<AudioState>((set, get) => ({
   playHit: () => {
     const { hitSound } = get();
     if (hitSound) {
-      // Clone the sound to allow overlapping playback
-      const soundClone = hitSound.cloneNode() as HTMLAudioElement;
-      soundClone.volume = 0.4;
-      soundClone.play().catch(error => {
+      hitSound.currentTime = 0;
+      hitSound.volume = 0.4;
+      hitSound.play().catch(error => {
         console.log("Hit sound play prevented:", error);
       });
     }
@@ -49,10 +48,9 @@ export const useAudio = create<AudioState>((set, get) => ({
   playGem: () => {
     const { gemSound } = get();
     if (gemSound) {
-      // Clone the sound to allow overlapping playback
-      const soundClone = gemSound.cloneNode() as HTMLAudioElement;
-      soundClone.volume = 0.3;
-      soundClone.play().catch(error => {
+      gemSound.currentTime = 0;
+      gemSound.volume = 0.3;
+      gemSound.play().catch(error => {
         console.log("Gem sound play prevented:", error);
       });
     }

@@ -21,16 +21,32 @@ const MineGame = () => {
     }
     
     // Load sounds
-    const hitSound = new Audio("/sounds/explosion.mp3");
-    const successSound = new Audio("/sounds/success.mp3");
-    const gemSound = new Audio("/sounds/gem.mp3");
-    const cashoutSound = new Audio("/sounds/cashout.mp3");
+    const loadSounds = () => {
+      try {
+        const hitSound = new Audio("/sounds/explosion.mp3");
+        const successSound = new Audio("/sounds/success.mp3");
+        const gemSound = new Audio("/sounds/gem.mp3");
+        const cashoutSound = new Audio("/sounds/cashout.mp3");
+        
+        // Set the sounds in the audio store only after they've loaded
+        hitSound.addEventListener('canplaythrough', () => useAudio.getState().setHitSound(hitSound));
+        successSound.addEventListener('canplaythrough', () => useAudio.getState().setSuccessSound(successSound));
+        gemSound.addEventListener('canplaythrough', () => useAudio.getState().setGemSound(gemSound));
+        cashoutSound.addEventListener('canplaythrough', () => useAudio.getState().setCashoutSound(cashoutSound));
+        
+        // Start loading the sounds
+        hitSound.load();
+        successSound.load();
+        gemSound.load();
+        cashoutSound.load();
+        
+        console.log("Sound files loading started");
+      } catch (error) {
+        console.error("Error loading sound files:", error);
+      }
+    };
     
-    // Set the sounds in the audio store
-    useAudio.getState().setHitSound(hitSound);
-    useAudio.getState().setSuccessSound(successSound);
-    useAudio.getState().setGemSound(gemSound);
-    useAudio.getState().setCashoutSound(cashoutSound);
+    loadSounds();
     
     // Check for ongoing game on mount
     const fetchCurrentGame = async () => {
