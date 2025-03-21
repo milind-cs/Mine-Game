@@ -246,6 +246,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const balance = storage.resetBalance();
     res.json({ balance });
   });
+  
+  // Deposit money to player balance
+  app.post("/api/player/deposit", (req, res) => {
+    const { amount } = req.body;
+    
+    // Validate amount
+    if (!amount || amount <= 0) {
+      return res.status(400).json({ message: "Invalid deposit amount" });
+    }
+    
+    // Update player balance
+    const balance = storage.adjustBalance(amount);
+    res.json({ balance });
+  });
 
   const httpServer = createServer(app);
 

@@ -5,6 +5,7 @@ import BettingPanel from "./BettingPanel";
 import GameControls from "./GameControls";
 import GameStats from "./GameStats";
 import GameHistory from "./GameHistory";
+import DepositPanel from "./DepositPanel";
 import { useAudio } from "@/lib/stores/useAudio";
 import { usePlayerStore } from "@/lib/stores/usePlayerStore";
 import { apiRequest } from "@/lib/queryClient";
@@ -191,6 +192,7 @@ const MineGame = () => {
 
         <div>
           <div className="grid grid-cols-1 gap-4">
+            <DepositPanel />
             <GameStats gameState={gameState} />
             <GameHistory />
           </div>
