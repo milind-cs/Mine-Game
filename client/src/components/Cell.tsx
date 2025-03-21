@@ -43,13 +43,13 @@ const Cell = ({ cell, onClick, gameState }: CellProps) => {
 
   // Determine cell styling
   const cellStyle = cn(
-    "w-16 h-16 flex items-center justify-center rounded-md cursor-pointer transition-all duration-200",
+    "w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex items-center justify-center rounded-md cursor-pointer transition-all duration-200",
     popAnimation && "pop",
     cell.revealed 
       ? cell.hasMine 
         ? "bg-red-600 text-white" 
         : "bg-primary text-primary-foreground" 
-      : "bg-secondary hover:bg-secondary/80",
+      : "bg-secondary hover:bg-secondary/80 active:bg-secondary/70",
     gameState.status !== "active" && !cell.revealed && "cursor-not-allowed opacity-80",
     isHovered && gameState.status === "active" && !cell.revealed && "ring-2 ring-primary",
   );
@@ -83,18 +83,7 @@ const Cell = ({ cell, onClick, gameState }: CellProps) => {
               : "Game ended"}
         </TooltipContent>
       </Tooltip>
-      
-      <style jsx>{`
-        .pop {
-          animation: pop 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-        }
-        
-        @keyframes pop {
-          0% { transform: scale(0.8); }
-          50% { transform: scale(1.1); }
-          100% { transform: scale(1); }
-        }
-      `}</style>
+      {/* Animation styles moved to global CSS */}
     </TooltipProvider>
   );
 };

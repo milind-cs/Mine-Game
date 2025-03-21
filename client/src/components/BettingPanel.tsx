@@ -58,16 +58,16 @@ const BettingPanel = ({ onStartGame, maxBet }: BettingPanelProps) => {
   };
 
   return (
-    <div className="max-w-md mx-auto">
-      <Card className="bg-secondary/50 mb-8">
-        <CardContent className="pt-6">
+    <div className="w-full max-w-md mx-auto px-2 sm:px-4">
+      <Card className="bg-secondary/50 mb-6 sm:mb-8">
+        <CardContent className="p-3 sm:p-6 sm:pt-6">
           <h3 className="text-xl font-semibold mb-4">Place Your Bet</h3>
           
           <div className="mb-6">
             <label className="block text-sm font-medium mb-1">
               Bet Amount: ${bet.toFixed(2)}
             </label>
-            <div className="flex gap-2">
+            <div className="flex gap-1 sm:gap-2">
               <Input
                 type="number"
                 value={bet}
@@ -80,21 +80,21 @@ const BettingPanel = ({ onStartGame, maxBet }: BettingPanelProps) => {
               <Button 
                 variant="outline" 
                 onClick={() => setBet(Math.min(bet * 2, maxBet))}
-                className="whitespace-nowrap"
+                className="whitespace-nowrap text-xs sm:text-sm px-2 sm:px-3"
               >
                 2x
               </Button>
               <Button 
                 variant="outline" 
                 onClick={() => setBet(Math.max(bet / 2, minBet))}
-                className="whitespace-nowrap"
+                className="whitespace-nowrap text-xs sm:text-sm px-2 sm:px-3"
               >
                 ½x
               </Button>
             </div>
             <div className="flex justify-between mt-2">
-              <Button variant="ghost" size="sm" onClick={() => setBet(minBet)}>Min</Button>
-              <Button variant="ghost" size="sm" onClick={() => setBet(maxBet)}>Max</Button>
+              <Button variant="ghost" size="sm" className="text-xs sm:text-sm h-8" onClick={() => setBet(minBet)}>Min</Button>
+              <Button variant="ghost" size="sm" className="text-xs sm:text-sm h-8" onClick={() => setBet(maxBet)}>Max</Button>
             </div>
           </div>
           
